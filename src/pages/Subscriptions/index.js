@@ -5,15 +5,15 @@ import { Background } from '~/components';
 
 // import { Container } from './styles';
 
-function Meetups() {
+function Subscriptions() {
   return <Background />;
 }
 
-Meetups.navigationOptions = {
-  tabBarLabel: 'Meetups',
+Subscriptions.navigationOptions = {
+  tabBarLabel: 'Inscrições',
   tabBarIcon: ({ tintColor }) => (
-    <Icon name="format-list-bulleted" size={20} color={tintColor} />
+    <Icon name="local-offer" size={20} color={tintColor} />
   ),
 };
 
-export default Meetups;
+export default Subscriptions;

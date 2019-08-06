@@ -5,15 +5,15 @@ import { Background } from '~/components';
 
 // import { Container } from './styles';
 
-function Meetups() {
+function Profile() {
   return <Background />;
 }
 
-Meetups.navigationOptions = {
-  tabBarLabel: 'Meetups',
+Profile.navigationOptions = {
+  tabBarLabel: 'Meu perfil',
   tabBarIcon: ({ tintColor }) => (
-    <Icon name="format-list-bulleted" size={20} color={tintColor} />
+    <Icon name="person" size={20} color={tintColor} />
   ),
 };
 
-export default Meetups;
+export default Profile;
