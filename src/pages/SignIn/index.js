@@ -1,7 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Background, Logo } from '~/components';
+import { signInRequest } from '~/store/modules/auth/actions';
 
 import {
   Container,
@@ -13,9 +15,18 @@ import {
 } from './styles';
 
 function SignIn({ navigation }) {
+  const dispatch = useDispatch();
+
   const passwordRef = useRef();
 
-  function handleSubmit() {}
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const loading = useSelector(state => state.auth.loading);
+
+  function handleSubmit() {
+    dispatch(signInRequest(email, password));
+  }
 
   return (
     <Background>
@@ -32,6 +43,8 @@ function SignIn({ navigation }) {
             textContentType="emailAddress"
             blurOnSubmit={false}
             onSubmitEditing={() => passwordRef.current.focus()}
+            value={email}
+            onChangeText={setEmail}
           />
 
           <FormInput
@@ -41,9 +54,13 @@ function SignIn({ navigation }) {
             textContentType="password"
             ref={passwordRef}
             onSubmitEditing={handleSubmit}
+            value={password}
+            onChangeText={setPassword}
           />
 
-          <SubmitButton onPress={handleSubmit}>Entrar</SubmitButton>
+          <SubmitButton loading={loading} onPress={handleSubmit}>
+            Entrar
+          </SubmitButton>
         </Form>
 
         <SignLink onPress={() => navigation.navigate('SignUp')}>
