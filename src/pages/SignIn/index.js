@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { Background, Logo } from '~/components';
@@ -13,6 +13,10 @@ import {
 } from './styles';
 
 function SignIn({ navigation }) {
+  const passwordRef = useRef();
+
+  function handleSubmit() {}
+
   return (
     <Background>
       <Container>
@@ -26,16 +30,20 @@ function SignIn({ navigation }) {
             autoCapitalize="none"
             returnKeyType="next"
             textContentType="emailAddress"
+            blurOnSubmit={false}
+            onSubmitEditing={() => passwordRef.current.focus()}
           />
 
           <FormInput
             placeholder="Sua senha secreta"
             secureTextEntry
-            returnKeyType="go"
+            returnKeyType="send"
             textContentType="password"
+            ref={passwordRef}
+            onSubmitEditing={handleSubmit}
           />
 
-          <SubmitButton onPress={() => {}}>Entrar</SubmitButton>
+          <SubmitButton onPress={handleSubmit}>Entrar</SubmitButton>
         </Form>
 
         <SignLink onPress={() => navigation.navigate('SignUp')}>

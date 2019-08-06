@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { Background, Logo } from '~/components';
@@ -13,6 +13,11 @@ import {
 } from './styles';
 
 function SignIn({ navigation }) {
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  function handleSubmit() {}
+
   return (
     <Background>
       <Container>
@@ -24,6 +29,8 @@ function SignIn({ navigation }) {
             autoCapitalize="words"
             returnKeyType="next"
             textContentType="name"
+            blurOnSubmit={false}
+            onSubmitEditing={() => emailRef.current.focus()}
           />
 
           <FormInput
@@ -33,6 +40,9 @@ function SignIn({ navigation }) {
             autoCapitalize="none"
             returnKeyType="next"
             textContentType="emailAddress"
+            ref={emailRef}
+            blurOnSubmit={false}
+            onSubmitEditing={() => passwordRef.current.focus()}
           />
 
           <FormInput
@@ -40,9 +50,11 @@ function SignIn({ navigation }) {
             secureTextEntry
             returnKeyType="go"
             textContentType="password"
+            ref={passwordRef}
+            onSubmitEditing={handleSubmit}
           />
 
-          <SubmitButton onPress={() => {}}>Criar conta</SubmitButton>
+          <SubmitButton onPress={handleSubmit}>Criar conta</SubmitButton>
         </Form>
 
         <SignLink onPress={() => navigation.navigate('SignIn')}>
