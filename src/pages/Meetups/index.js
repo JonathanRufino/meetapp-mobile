@@ -1,93 +1,69 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { format, addDays, subDays } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
+import api from '~/services/api';
 import { Background, Meetup } from '~/components';
 
 import {
   Container,
   DateControl,
   DateButton,
-  Date,
+  DateSelected,
   MeetupsList,
 } from './styles';
 
-const data = [
-  {
-    id: 37,
-    title: 'Meetup de React Native',
-    description: 'Teste',
-    location: 'Rua Guilherme Gembala, 260',
-    date: '2019-10-11 01:00:00.000 +00:00',
-    user: {
-      name: 'Jonathan Rufino Paiva',
-    },
-    banner: {
-      url:
-        'http://192.168.0.16:3333/files/9fb344a96f0956e868598098d1ef3135.JPG',
-    },
-  },
-  {
-    id: 38,
-    title: 'Meetup de React Native',
-    description: 'Teste',
-    location: 'Rua Guilherme Gembala, 260',
-    date: '2019-10-11 01:00:00.000 +00:00',
-    user: {
-      name: 'Jonathan Rufino Paiva',
-    },
-    banner: {
-      url:
-        'http://192.168.0.16:3333/files/9fb344a96f0956e868598098d1ef3135.JPG',
-    },
-  },
-  {
-    id: 39,
-    title: 'Meetup de React Native',
-    description: 'Teste',
-    location: 'Rua Guilherme Gembala, 260',
-    date: '2019-10-11 01:00:00.000 +00:00',
-    user: {
-      name: 'Jonathan Rufino Paiva',
-    },
-    banner: {
-      url:
-        'http://192.168.0.16:3333/files/9fb344a96f0956e868598098d1ef3135.JPG',
-    },
-  },
-  {
-    id: 40,
-    title: 'Meetup de React Native',
-    description: 'Teste',
-    location: 'Rua Guilherme Gembala, 260',
-    date: '2019-10-11 01:00:00.000 +00:00',
-    user: {
-      name: 'Jonathan Rufino Paiva',
-    },
-    banner: {
-      url:
-        'http://192.168.0.16:3333/files/9fb344a96f0956e868598098d1ef3135.JPG',
-    },
-  },
-];
-
 function Meetups() {
+  const [date, setDate] = useState(new Date());
+  const [meetups, setMeetups] = useState([]);
+
+  const dateFormatted = useMemo(() => {
+    return format(date, "d 'de' MMMM", {
+      locale: pt,
+    });
+  }, [date]);
+
+  useEffect(() => {
+    async function loadMeetups() {
+      console.tron.log(date.toISOString());
+      const response = await api.get('meetups', {
+        params: {
+          date: date.toISOString(),
+        },
+      });
+
+      setMeetups(response.data);
+    }
+
+    loadMeetups();
+  }, [date]);
+
+  function decrementDate() {
+    setDate(subDays(date, 1));
+  }
+
+  function incrementeDate() {
+    setDate(addDays(date, 1));
+  }
+
   return (
     <Background>
       <Container>
         <DateControl>
-          <DateButton>
+          <DateButton onPress={decrementDate}>
             <Icon name="chevron-left" size={30} color="#fff" />
           </DateButton>
 
-          <Date>31 de Maio</Date>
+          <DateSelected>{dateFormatted}</DateSelected>
 
-          <DateButton>
+          <DateButton onPress={incrementeDate}>
             <Icon name="chevron-right" size={30} color="#fff" />
           </DateButton>
         </DateControl>
 
         <MeetupsList
-          data={data}
+          data={meetups}
           renderItem={({ item }) => (
             <Meetup
               data={item}

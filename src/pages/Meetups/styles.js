@@ -13,7 +13,7 @@ export const DateControl = styled.View`
 
 export const DateButton = styled.TouchableOpacity``;
 
-export const Date = styled.Text`
+export const DateSelected = styled.Text`
   font-size: 20px;
   font-weight: bold;
   color: #fff;
