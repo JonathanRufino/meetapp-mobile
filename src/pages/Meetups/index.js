@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { format, addDays, subDays } from 'date-fns';
 import pt from 'date-fns/locale/pt';
@@ -47,6 +48,16 @@ function Meetups() {
     setDate(addDays(date, 1));
   }
 
+  async function handleSubscription(meetupId) {
+    try {
+      await api.post(`meetups/${meetupId}/subscriptions`);
+
+      Alert.alert('Sucesso!', 'Inscrição realizada com sucesso');
+    } catch (err) {
+      Alert.alert('Erro na inscrição', err.response.data.error);
+    }
+  }
+
   return (
     <Background>
       <Container>
@@ -68,7 +79,7 @@ function Meetups() {
             <Meetup
               data={item}
               action="Realizar inscrição"
-              onPress={() => {}}
+              onPress={() => handleSubscription(item.id)}
             />
           )}
           keyExtractor={item => String(item.id)}
