@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { Background } from '~/components';
 import { updateProfileRequest } from '~/store/modules/user/actions';
+import { signOut } from '~/store/modules/auth/actions';
 
 import {
   Container,
@@ -49,7 +50,9 @@ function Profile() {
     );
   }
 
-  function handleSignOut() {}
+  function handleSignOut() {
+    dispatch(signOut());
+  }
 
   return (
     <Background>
