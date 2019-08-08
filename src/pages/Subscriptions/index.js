@@ -1,12 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { Background } from '~/components';
+import api from '~/services/api';
+import { Background, Meetup } from '~/components';
 
-// import { Container } from './styles';
+import { Container, SubscriptionsList } from './styles';
 
 function Subscriptions() {
-  return <Background />;
+  const [subscriptions, setSubscriptions] = useState([]);
+
+  useEffect(() => {
+    async function loadSubscriptions() {
+      const response = await api.get('subscriptions');
+
+      setSubscriptions(response.data);
+    }
+
+    loadSubscriptions();
+  }, []);
+
+  function handleCancelSubscription() {}
+
+  return (
+    <Background>
+      <Container>
+        <SubscriptionsList
+          data={subscriptions}
+          renderItem={({ item }) => (
+            <Meetup
+              data={item.meetup}
+              action="Cancelar inscrição"
+              onPress={() => handleCancelSubscription(item.id)}
+            />
+          )}
+          keyExtractor={item => String(item.id)}
+        />
+      </Container>
+    </Background>
+  );
 }
 
 Subscriptions.navigationOptions = {
