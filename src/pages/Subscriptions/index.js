@@ -1,25 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
+import { withNavigationFocus } from 'react-navigation';
 
 import api from '~/services/api';
 import { Background, Meetup } from '~/components';
 
 import { Container, SubscriptionsList } from './styles';
 
-function Subscriptions() {
+function Subscriptions({ isFocused }) {
   const [subscriptions, setSubscriptions] = useState([]);
 
+  async function loadSubscriptions() {
+    const response = await api.get('subscriptions');
+
+    setSubscriptions(response.data);
+  }
+
   useEffect(() => {
-    async function loadSubscriptions() {
-      const response = await api.get('subscriptions');
-
-      setSubscriptions(response.data);
+    if (isFocused) {
+      loadSubscriptions();
     }
+  }, [isFocused]);
 
-    loadSubscriptions();
-  }, []);
+  async function handleCancelSubscription(subscriptionId) {
+    await api.delete(`subscriptions/${subscriptionId}`);
 
-  function handleCancelSubscription() {}
+    setSubscriptions(
+      subscriptions.filter(subscription => subscription.id !== subscriptionId)
+    );
+  }
 
   return (
     <Background>
@@ -47,4 +57,8 @@ Subscriptions.navigationOptions = {
   ),
 };
 
-export default Subscriptions;
+Subscriptions.propTypes = {
+  isFocused: PropTypes.bool.isRequired,
+};
+
+export default withNavigationFocus(Subscriptions);
