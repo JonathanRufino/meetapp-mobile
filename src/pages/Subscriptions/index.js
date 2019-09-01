@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
 import { withNavigationFocus } from 'react-navigation';
 
@@ -33,6 +33,8 @@ function Subscriptions({ isFocused }) {
 
   return (
     <Background>
+      <StatusBar barStyle="light-content" backgroundColor="#000" />
+
       <Container>
         <SubscriptionsList
           data={subscriptions}
@@ -49,13 +51,6 @@ function Subscriptions({ isFocused }) {
     </Background>
   );
 }
-
-Subscriptions.navigationOptions = {
-  tabBarLabel: 'Inscrições',
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="local-offer" size={20} color={tintColor} />
-  ),
-};
 
 Subscriptions.propTypes = {
   isFocused: PropTypes.bool.isRequired,

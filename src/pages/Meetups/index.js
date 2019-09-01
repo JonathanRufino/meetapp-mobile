@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Alert } from 'react-native';
-import PropTypes from 'prop-types';
+import { Alert, StatusBar } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import ADIcon from 'react-native-vector-icons/AntDesign';
 import { format, addDays, subDays } from 'date-fns';
@@ -96,6 +95,8 @@ function Meetups() {
 
   return (
     <Background>
+      <StatusBar barStyle="light-content" backgroundColor="#000" />
+
       <Container>
         <DateControl>
           <DateButton onPress={decrementDate}>
@@ -142,18 +143,5 @@ function Meetups() {
     </Background>
   );
 }
-
-function TabBarIcon({ tintColor }) {
-  return <MIcon name="format-list-bulleted" size={20} color={tintColor} />;
-}
-
-TabBarIcon.propTypes = {
-  tintColor: PropTypes.string.isRequired,
-};
-
-Meetups.navigationOptions = {
-  tabBarLabel: 'Meetups',
-  tabBarIcon: TabBarIcon,
-};
 
 export default Meetups;

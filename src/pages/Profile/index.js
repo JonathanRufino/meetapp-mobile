@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { StatusBar } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Background } from '~/components';
@@ -56,6 +56,8 @@ function Profile() {
 
   return (
     <Background>
+      <StatusBar barStyle="light-content" backgroundColor="#000" />
+
       <Container>
         <Form>
           <FormInput
@@ -131,12 +133,5 @@ function Profile() {
     </Background>
   );
 }
-
-Profile.navigationOptions = {
-  tabBarLabel: 'Meu perfil',
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="person" size={20} color={tintColor} />
-  ),
-};
 
 export default Profile;
