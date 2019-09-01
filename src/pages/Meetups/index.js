@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Alert, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { format, addDays, subDays } from 'date-fns';
 import pt from 'date-fns/locale/pt';
+import { useDispatch } from 'react-redux';
 
 import api from '~/services/api';
 import { Background, Meetup, EmptyState } from '~/components';
+import { subscribeRequest } from '~/store/modules/meetup/actions';
 
 import {
   Container,
@@ -18,6 +20,8 @@ import {
 } from './styles';
 
 function Meetups() {
+  const dispatch = useDispatch();
+
   const [date, setDate] = useState(new Date());
   const [meetups, setMeetups] = useState([]);
   const [page, setPage] = useState(1);
@@ -84,13 +88,7 @@ function Meetups() {
   }
 
   async function handleSubscription(meetupId) {
-    try {
-      await api.post(`meetups/${meetupId}/subscriptions`);
-
-      Alert.alert('Sucesso!', 'Inscrição realizada com sucesso');
-    } catch (err) {
-      Alert.alert('Erro na inscrição', err.response.data.error);
-    }
+    dispatch(subscribeRequest(meetupId));
   }
 
   return (

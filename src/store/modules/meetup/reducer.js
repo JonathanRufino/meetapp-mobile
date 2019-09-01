@@ -1,38 +1,23 @@
 import produce from 'immer';
 
+import types from './types';
+
 const INITIAL_STATE = {
-  meetup: null,
   loading: false,
 };
 
 function meetup(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case '@auth/SIGN_OUT': {
-        draft.meetup = null;
-        break;
-      }
-      case '@meetup/CREATE_MEETUP_REQUEST': {
+      case types.SUBSCRIBE_REQUEST:
+      case types.CANCEL_SUBSCRIPTION_REQUEST: {
         draft.loading = true;
         break;
       }
-      case '@meetup/CREATE_MEETUP_SUCCESS': {
-        draft.loading = false;
-        break;
-      }
-      case '@meetup/CREATE_MEETUP_FAILURE': {
-        draft.loading = false;
-        break;
-      }
-      case '@meetup/UPDATE_MEETUP_REQUEST': {
-        draft.loading = true;
-        break;
-      }
-      case '@meetup/UPDATE_MEETUP_SUCCESS': {
-        draft.loading = false;
-        break;
-      }
-      case '@meetup/UPDATE_MEETUP_FAILURE': {
+      case types.SUBSCRIBE_SUCCESS:
+      case types.SUBSCRIBE_FAILURE:
+      case types.CANCEL_SUBSCRIPTION_SUCCESS:
+      case types.CANCEL_SUBSCRIPTION_FAILURE: {
         draft.loading = false;
         break;
       }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
+import { useSelector } from 'react-redux';
 
 import {
   Container,
@@ -23,6 +24,8 @@ function Meetup({ data, visible, action, onPress }) {
       locale: pt,
     });
   }, [data.date]);
+
+  const loading = useSelector(state => state.meetup.loading);
 
   return (
     <Container>
@@ -51,7 +54,9 @@ function Meetup({ data, visible, action, onPress }) {
           </Row>
         </Info>
 
-        <ActionButton onPress={onPress}>{action}</ActionButton>
+        <ActionButton onPress={onPress}>
+          {loading ? 'Processando...' : action}
+        </ActionButton>
       </Content>
     </Container>
   );

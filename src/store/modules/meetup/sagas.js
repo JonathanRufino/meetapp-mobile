@@ -2,28 +2,30 @@ import { Alert } from 'react-native';
 import { all, put, call, takeLatest } from 'redux-saga/effects';
 
 import api from '~/services/api';
+
 import {
-  createMeetupSuccess,
-  createMeetupFailure,
-  updateMeetupSuccess,
-  updateMeetupFailure,
-} from '~/store/modules/meetup/actions';
+  subscribeSuccess,
+  subscribeFailure,
+  cancelSubscriptionSuccess,
+  cancelSubscriptionFailure,
+} from './actions';
+import types from './types';
 
-export function* createMeetup({ payload }) {
+export function* subscribe({ payload }) {
   try {
-    yield call(api.post, 'meetups', payload.data);
+    yield call(api.post, `meetups/${payload.id}/subscriptions`);
 
-    Alert.alert('Sucesso!', 'Meetup criado com sucesso');
+    Alert.alert('Sucesso!', 'Inscrição realizada com sucesso');
 
-    yield put(createMeetupSuccess());
+    yield put(subscribeSuccess());
   } catch (err) {
-    Alert.alert('Erro ao criar meetup', 'Confira os dados informados');
+    Alert.alert('Erro na inscrição', err.response.data.error);
 
-    yield put(createMeetupFailure());
+    yield put(subscribeFailure());
   }
 }
 
-export function* updateMeetup({ payload }) {
+export function* cancelSubscription({ payload }) {
   const { id, data } = payload;
 
   try {
@@ -31,15 +33,15 @@ export function* updateMeetup({ payload }) {
 
     Alert.alert('Sucesso!', 'Meetup atualizado com sucesso');
 
-    yield put(updateMeetupSuccess());
+    yield put(cancelSubscriptionSuccess());
   } catch (err) {
-    Alert.alert('Erro ao atualizar meetup', 'Confira os dados informados');
+    Alert.alert('Erro ao atualizar meetup', err.response.data.error);
 
-    yield put(updateMeetupFailure());
+    yield put(cancelSubscriptionFailure());
   }
 }
 
 export default all([
-  takeLatest('@meetup/CREATE_MEETUP_REQUEST', createMeetup),
-  takeLatest('@meetup/UPDATE_MEETUP_REQUEST', updateMeetup),
+  takeLatest(types.SUBSCRIBE_REQUEST, subscribe),
+  takeLatest(types.CANCEL_SUBSCRIPTION_REQUEST, cancelSubscription),
 ]);

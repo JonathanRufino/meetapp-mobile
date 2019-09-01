@@ -1,37 +1,39 @@
-export function createMeetupRequest(data) {
+import types from './types';
+
+export function subscribeRequest(id) {
   return {
-    type: '@meetup/CREATE_MEETUP_REQUEST',
-    payload: { data },
+    type: types.SUBSCRIBE_REQUEST,
+    payload: { id },
   };
 }
 
-export function createMeetupSuccess() {
+export function subscribeSuccess() {
   return {
-    type: '@meetup/CREATE_MEETUP_SUCCESS',
+    type: types.SUBSCRIBE_SUCCESS,
   };
 }
 
-export function createMeetupFailure() {
+export function subscribeFailure() {
   return {
-    type: '@meetup/CREATE_MEETUP_FAILURE',
+    type: types.SUBSCRIBE_FAILURE,
   };
 }
 
-export function updateMeetupRequest(id, data) {
+export function cancelSubscriptionRequest(id) {
   return {
-    type: '@meetup/UPDATE_MEETUP_REQUEST',
-    payload: { id, data },
+    type: types.CANCEL_SUBSCRIPTION_REQUEST,
+    payload: { id },
   };
 }
 
-export function updateMeetupSuccess() {
+export function cancelSubscriptionSuccess() {
   return {
-    type: '@meetup/UPDATE_MEETUP_SUCCESS',
+    type: types.CANCEL_SUBSCRIPTION_SUCCESS,
   };
 }
 
-export function updateMeetupFailure() {
+export function cancelSubscriptionFailure() {
   return {
-    type: '@meetup/UPDATE_MEETUP_FAILURE',
+    type: types.CANCEL_SUBSCRIPTION_FAILURE,
   };
 }
