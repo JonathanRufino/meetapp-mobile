@@ -11,6 +11,7 @@ export const Title = styled.Text`
   font-weight: bold;
   color: #999;
   margin-top: 30px;
+  text-align: center;
 `;
 
 export const Message = styled.Text`
