@@ -26,7 +26,11 @@ function Meetup({ data, action, onPress }) {
 
   return (
     <Container>
-      <Banner source={{ uri: data.banner.url }} />
+      <Banner
+        source={{ uri: data.banner.url }}
+        // TODO: Backend should generate a smaller image for faster loading
+        smallSource={{ uri: data.banner.url }}
+      />
 
       <Content>
         <Title>{data.title}</Title>

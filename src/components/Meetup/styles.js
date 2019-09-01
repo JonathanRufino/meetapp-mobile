@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 
 import Button from '~/components/Button';
+import LazyImage from '~/components/LazyImage';
 
 export const Container = styled.View`
   background: #fff;
@@ -9,7 +10,7 @@ export const Container = styled.View`
   margin-bottom: 20px;
 `;
 
-export const Banner = styled.Image`
+export const Banner = styled(LazyImage)`
   height: 150px;
   width: auto;
 `;

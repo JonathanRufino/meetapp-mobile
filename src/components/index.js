@@ -4,5 +4,6 @@ import Button from './Button';
 import Logo from './Logo';
 import Meetup from './Meetup';
 import EmptyState from './EmptyState';
+import LazyImage from './LazyImage';
 
-export { Background, Input, Button, Logo, Meetup, EmptyState };
+export { Background, Input, Button, Logo, Meetup, EmptyState, LazyImage };
