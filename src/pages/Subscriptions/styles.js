@@ -10,3 +10,9 @@ export const SubscriptionsList = styled.FlatList.attrs({
 })`
   margin-top: 30px;
 `;
+
+export const Loading = styled.ActivityIndicator.attrs({
+  size: 'small',
+})`
+  margin: 30px 0;
+`;

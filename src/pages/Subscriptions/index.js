@@ -1,27 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
 import { withNavigationFocus } from 'react-navigation';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import api from '~/services/api';
-import { Background, Meetup } from '~/components';
+import { Background, Meetup, EmptyState } from '~/components';
 
-import { Container, SubscriptionsList } from './styles';
+import { Container, SubscriptionsList, Loading } from './styles';
 
 function Subscriptions({ isFocused }) {
   const [subscriptions, setSubscriptions] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [viewable, setViewable] = useState([]);
 
-  async function loadSubscriptions() {
-    const response = await api.get('subscriptions');
+  const handleViewableChanged = useCallback(({ changed }) => {
+    setViewable(changed.map(({ item }) => item.id));
+  }, []);
 
-    setSubscriptions(response.data);
+  async function loadPage(pageNumber = page, shouldRefresh = false) {
+    if (total && pageNumber > total) return;
+
+    setLoading(true);
+
+    const response = await api.get('subscriptions', {
+      params: {
+        page: pageNumber,
+      },
+    });
+    const totalItems = response.headers['x-total-count'];
+
+    setTotal(Math.ceil(totalItems / 10));
+    setSubscriptions(
+      shouldRefresh ? response.data : [...subscriptions, ...response.data]
+    );
+    setPage(pageNumber + 1);
+    setLoading(false);
   }
 
   useEffect(() => {
     if (isFocused) {
-      loadSubscriptions();
+      loadPage();
     }
-  }, [isFocused]);
+  }, [isFocused]); // eslint-disable-line
+
+  async function refreshList() {
+    setRefreshing(true);
+
+    await loadPage(1, true);
+
+    setRefreshing(false);
+  }
 
   async function handleCancelSubscription(subscriptionId) {
     await api.delete(`subscriptions/${subscriptionId}`);
@@ -38,14 +70,38 @@ function Subscriptions({ isFocused }) {
       <Container>
         <SubscriptionsList
           data={subscriptions}
+          keyExtractor={item => String(item.id)}
+          onEndReached={() => loadPage()}
+          onEndReachedThreshold={0.1}
+          onRefresh={refreshList}
+          refreshing={refreshing}
+          onViewableItemsChanged={handleViewableChanged}
+          viewabilityConfig={{ viewAreaCoveragePercentThreshold: 20 }}
+          ListFooterComponent={loading && <Loading />}
+          ListEmptyComponent={
+            !loading &&
+            !refreshing && (
+              <EmptyState
+                image={
+                  <MCIcon
+                    name="calendar-remove-outline"
+                    size={100}
+                    color="#999"
+                  />
+                }
+                title="Você ainda não se inscreveu em nenhum meetup"
+                message="Que tal participar de diversos eventos e, além de aprender muita coisa, conhecer diversas pessoas legais?"
+              />
+            )
+          }
           renderItem={({ item }) => (
             <Meetup
               data={item.meetup}
               action="Cancelar inscrição"
               onPress={() => handleCancelSubscription(item.id)}
+              visible={viewable.includes(item.id)}
             />
           )}
-          keyExtractor={item => String(item.id)}
         />
       </Container>
     </Background>
