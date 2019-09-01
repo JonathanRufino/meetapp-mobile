@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Alert } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
+import ADIcon from 'react-native-vector-icons/AntDesign';
 import { format, addDays, subDays } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import api from '~/services/api';
-import { Background, Meetup } from '~/components';
+import { Background, Meetup, EmptyState } from '~/components';
 
 import {
   Container,
@@ -13,11 +14,16 @@ import {
   DateButton,
   DateSelected,
   MeetupsList,
+  Loading,
 } from './styles';
 
 function Meetups() {
   const [date, setDate] = useState(new Date());
   const [meetups, setMeetups] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const dateFormatted = useMemo(() => {
     return format(date, "d 'de' MMMM", {
@@ -25,20 +31,36 @@ function Meetups() {
     });
   }, [date]);
 
+  async function loadPage(pageNumber = page, shouldRefresh = false) {
+    if (total && pageNumber > total) return;
+
+    setLoading(true);
+
+    const response = await api.get('meetups', {
+      params: {
+        date: date.toISOString(),
+        page: pageNumber,
+      },
+    });
+    const totalItems = response.headers['x-total-count'];
+
+    setTotal(Math.ceil(totalItems / 10));
+    setMeetups(shouldRefresh ? response.data : [...meetups, ...response.data]);
+    setPage(pageNumber + 1);
+    setLoading(false);
+  }
+
   useEffect(() => {
-    async function loadMeetups() {
-      console.tron.log(date.toISOString());
-      const response = await api.get('meetups', {
-        params: {
-          date: date.toISOString(),
-        },
-      });
+    loadPage();
+  }, []); // eslint-disable-line
 
-      setMeetups(response.data);
-    }
+  useEffect(() => {
+    setPage(1);
+    setTotal(0);
+    setMeetups([]);
 
-    loadMeetups();
-  }, [date]);
+    loadPage();
+  }, [date]); // eslint-disable-line
 
   function decrementDate() {
     setDate(subDays(date, 1));
@@ -46,6 +68,14 @@ function Meetups() {
 
   function incrementeDate() {
     setDate(addDays(date, 1));
+  }
+
+  async function refreshList() {
+    setRefreshing(true);
+
+    await loadPage(1, true);
+
+    setRefreshing(false);
   }
 
   async function handleSubscription(meetupId) {
@@ -63,18 +93,34 @@ function Meetups() {
       <Container>
         <DateControl>
           <DateButton onPress={decrementDate}>
-            <Icon name="chevron-left" size={30} color="#fff" />
+            <MIcon name="chevron-left" size={30} color="#fff" />
           </DateButton>
 
           <DateSelected>{dateFormatted}</DateSelected>
 
           <DateButton onPress={incrementeDate}>
-            <Icon name="chevron-right" size={30} color="#fff" />
+            <MIcon name="chevron-right" size={30} color="#fff" />
           </DateButton>
         </DateControl>
 
         <MeetupsList
           data={meetups}
+          keyExtractor={item => String(item.id)}
+          onEndReached={() => loadPage()}
+          onEndReachedThreshold={0.1}
+          onRefresh={refreshList}
+          refreshing={refreshing}
+          ListFooterComponent={loading && <Loading />}
+          ListEmptyComponent={
+            !loading &&
+            !refreshing && (
+              <EmptyState
+                image={<ADIcon name="calendar" size={100} color="#999" />}
+                title="Não existem meetups nessa data"
+                message="Pesquise por outras datas, com certeza você encontrará um evento super legal."
+              />
+            )
+          }
           renderItem={({ item }) => (
             <Meetup
               data={item}
@@ -82,7 +128,6 @@ function Meetups() {
               onPress={() => handleSubscription(item.id)}
             />
           )}
-          keyExtractor={item => String(item.id)}
         />
       </Container>
     </Background>
@@ -92,7 +137,7 @@ function Meetups() {
 Meetups.navigationOptions = {
   tabBarLabel: 'Meetups',
   tabBarIcon: ({ tintColor }) => (
-    <Icon name="format-list-bulleted" size={20} color={tintColor} />
+    <MIcon name="format-list-bulleted" size={20} color={tintColor} />
   ),
 };
 

@@ -22,7 +22,15 @@ export const DateSelected = styled.Text`
 
 export const MeetupsList = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
-  contentContainerStyle: { paddingHorizontal: 20 },
+  contentContainerStyle: {
+    paddingHorizontal: 20,
+  },
 })`
   margin-top: 30px;
+`;
+
+export const Loading = styled.ActivityIndicator.attrs({
+  size: 'small',
+})`
+  margin: 30px 0;
 `;
