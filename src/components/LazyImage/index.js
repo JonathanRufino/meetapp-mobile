@@ -6,15 +6,17 @@ import { Small, Original } from './styles';
 
 const OriginalAnimated = Animated.createAnimatedComponent(Original);
 
-function LazyImage({ smallSource, source, style }) {
+function LazyImage({ smallSource, source, shouldLoad, style }) {
   const opacity = new Animated.Value(0);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoaded(true);
-    }, 2000);
-  }, []);
+    if (shouldLoad) {
+      setTimeout(() => {
+        setLoaded(true);
+      }, 2000);
+    }
+  }, [shouldLoad]);
 
   function handleAnimate() {
     Animated.timing(opacity, {
@@ -39,16 +41,18 @@ function LazyImage({ smallSource, source, style }) {
 }
 
 LazyImage.propTypes = {
-  style: Image.propTypes.style,
   smallSource: PropTypes.shape({
     uri: PropTypes.string,
   }).isRequired,
   source: PropTypes.shape({
     uri: PropTypes.string,
   }).isRequired,
+  shouldLoad: PropTypes.bool,
+  style: Image.propTypes.style,
 };
 
 LazyImage.defaultProps = {
+  shouldLoad: true,
   style: {},
 };
 

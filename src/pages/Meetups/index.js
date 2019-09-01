@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Alert } from 'react-native';
+import PropTypes from 'prop-types';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import ADIcon from 'react-native-vector-icons/AntDesign';
 import { format, addDays, subDays } from 'date-fns';
@@ -24,12 +25,17 @@ function Meetups() {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [viewable, setViewable] = useState([]);
 
   const dateFormatted = useMemo(() => {
     return format(date, "d 'de' MMMM", {
       locale: pt,
     });
   }, [date]);
+
+  const handleViewableChanged = useCallback(({ changed }) => {
+    setViewable(changed.map(({ item }) => item.id));
+  }, []);
 
   async function loadPage(pageNumber = page, shouldRefresh = false) {
     if (total && pageNumber > total) return;
@@ -110,6 +116,8 @@ function Meetups() {
           onEndReachedThreshold={0.1}
           onRefresh={refreshList}
           refreshing={refreshing}
+          onViewableItemsChanged={handleViewableChanged}
+          viewabilityConfig={{ viewAreaCoveragePercentThreshold: 20 }}
           ListFooterComponent={loading && <Loading />}
           ListEmptyComponent={
             !loading &&
@@ -126,6 +134,7 @@ function Meetups() {
               data={item}
               action="Realizar inscrição"
               onPress={() => handleSubscription(item.id)}
+              visible={viewable.includes(item.id)}
             />
           )}
         />
@@ -134,11 +143,17 @@ function Meetups() {
   );
 }
 
+function TabBarIcon({ tintColor }) {
+  return <MIcon name="format-list-bulleted" size={20} color={tintColor} />;
+}
+
+TabBarIcon.propTypes = {
+  tintColor: PropTypes.string.isRequired,
+};
+
 Meetups.navigationOptions = {
   tabBarLabel: 'Meetups',
-  tabBarIcon: ({ tintColor }) => (
-    <MIcon name="format-list-bulleted" size={20} color={tintColor} />
-  ),
+  tabBarIcon: TabBarIcon,
 };
 
 export default Meetups;

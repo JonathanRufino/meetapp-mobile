@@ -17,7 +17,7 @@ import {
   ActionButton,
 } from './styles';
 
-function Meetup({ data, action, onPress }) {
+function Meetup({ data, visible, action, onPress }) {
   const dateFormatted = useMemo(() => {
     return format(parseISO(data.date), "d 'de' MMMM', às' H'h'", {
       locale: pt,
@@ -30,6 +30,7 @@ function Meetup({ data, action, onPress }) {
         source={{ uri: data.banner.url }}
         // TODO: Backend should generate a smaller image for faster loading
         smallSource={{ uri: data.banner.url }}
+        shouldLoad={visible}
       />
 
       <Content>
@@ -70,8 +71,13 @@ Meetup.propTypes = {
       url: PropTypes.string,
     }),
   }).isRequired,
+  visible: PropTypes.bool,
   onPress: PropTypes.func.isRequired,
   action: PropTypes.string.isRequired,
+};
+
+Meetup.defaultProps = {
+  visible: true,
 };
 
 export default Meetup;
