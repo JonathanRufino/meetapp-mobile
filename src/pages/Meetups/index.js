@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Alert, StatusBar } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-import ADIcon from 'react-native-vector-icons/AntDesign';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { format, addDays, subDays } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
@@ -124,7 +124,13 @@ function Meetups() {
             !loading &&
             !refreshing && (
               <EmptyState
-                image={<ADIcon name="calendar" size={100} color="#999" />}
+                image={
+                  <MCIcon
+                    name="calendar-month-outline"
+                    size={100}
+                    color="#999"
+                  />
+                }
                 title="Não existem meetups nessa data"
                 message="Pesquise por outras datas, com certeza você encontrará um evento super legal."
               />
