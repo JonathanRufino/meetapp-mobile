@@ -29,7 +29,8 @@ export const SubmitButton = styled(Button)`
   margin-top: 15px;
 `;
 
-export const LogoutButton = styled(Button)`
+export const LogoutButton = styled(Button).attrs({
+  outline: true,
+})`
   margin-top: 15px;
-  background: #d44059;
 `;
