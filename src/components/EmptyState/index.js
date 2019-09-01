@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Entypo';
 
 import { Container, Title, Message } from './styles';
 
 function EmptyState({ image, title, message }) {
+  const [fade] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    Animated.timing(fade, {
+      toValue: 1,
+      duration: 500,
+    }).start();
+  });
+
   return (
-    <Container>
+    <Container style={{ opacity: fade }}>
       {image}
       <Title>{title}</Title>
       <Message>{message}</Message>
