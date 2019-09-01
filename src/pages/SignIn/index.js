@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Background, Logo } from '~/components';
 import { signInRequest } from '~/store/modules/auth/actions';
+import i18n from '~/i18n';
 
 import {
   Container,
@@ -35,7 +36,7 @@ function SignIn({ navigation }) {
 
         <Form>
           <FormInput
-            placeholder="Digite seu e-mail"
+            placeholder={i18n.t('placeholder.email')}
             keyboardType="email-address"
             autoCorrect={false}
             autoCapitalize="none"
@@ -48,7 +49,7 @@ function SignIn({ navigation }) {
           />
 
           <FormInput
-            placeholder="Sua senha secreta"
+            placeholder={i18n.t('placeholder.password')}
             secureTextEntry
             returnKeyType="send"
             textContentType="password"
@@ -59,12 +60,12 @@ function SignIn({ navigation }) {
           />
 
           <SubmitButton loading={loading} onPress={handleSubmit}>
-            Entrar
+            {i18n.t('button.signIn')}
           </SubmitButton>
         </Form>
 
         <SignLink onPress={() => navigation.navigate('SignUp')}>
-          <SignLinkText>Criar conta grátis</SignLinkText>
+          <SignLinkText>{i18n.t('link.createAccount')}</SignLinkText>
         </SignLink>
       </Container>
     </Background>

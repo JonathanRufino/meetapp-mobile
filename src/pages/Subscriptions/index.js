@@ -6,6 +6,7 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import api from '~/services/api';
 import { Background, Meetup, EmptyState } from '~/components';
+import i18n from '~/i18n';
 
 import { Container, SubscriptionsList, Loading } from './styles';
 
@@ -89,15 +90,15 @@ function Subscriptions({ isFocused }) {
                     color="#999"
                   />
                 }
-                title="Você ainda não se inscreveu em nenhum meetup"
-                message="Que tal participar de diversos eventos e, além de aprender muita coisa, conhecer diversas pessoas legais?"
+                title={i18n.t('empty.subscriptions.title')}
+                message={i18n.t('empty.subscriptions.description')}
               />
             )
           }
           renderItem={({ item }) => (
             <Meetup
               data={item.meetup}
-              action="Cancelar inscrição"
+              action={i18n.t('button.cancelSubscription')}
               onPress={() => handleCancelSubscription(item.id)}
               visible={viewable.includes(item.id)}
             />

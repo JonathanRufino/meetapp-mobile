@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import api from '~/services/api';
 import { Background, Meetup, EmptyState } from '~/components';
 import { subscribeRequest } from '~/store/modules/meetup/actions';
+import i18n from '~/i18n';
 
 import {
   Container,
@@ -129,15 +130,15 @@ function Meetups() {
                     color="#999"
                   />
                 }
-                title="Não existem meetups nessa data"
-                message="Pesquise por outras datas, com certeza você encontrará um evento super legal."
+                title={i18n.t('empty.meetups.title')}
+                message={i18n.t('empty.meetups.description')}
               />
             )
           }
           renderItem={({ item }) => (
             <Meetup
               data={item}
-              action="Realizar inscrição"
+              action={i18n.t('button.subscribe')}
               onPress={() => handleSubscription(item.id)}
               visible={viewable.includes(item.id)}
             />

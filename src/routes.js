@@ -9,6 +9,7 @@ import {
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 
 import logo from './assets/images/logo/logo.png';
+import i18n from './i18n';
 
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
@@ -40,7 +41,7 @@ const MeetupsStack = createStackNavigator(
   { Meetups },
   {
     navigationOptions: {
-      tabBarLabel: 'Meetups',
+      tabBarLabel: i18n.t('tab.meetups'),
       tabBarIcon: ({ tintColor }) => (
         <MIcon name="format-list-bulleted" size={20} color={tintColor} />
       ),
@@ -53,7 +54,7 @@ const SubscriptionsStack = createStackNavigator(
   { Subscriptions },
   {
     navigationOptions: {
-      tabBarLabel: 'Inscrições',
+      tabBarLabel: i18n.t('tab.subscriptions'),
       tabBarIcon: ({ tintColor }) => (
         <MIcon name="local-offer" size={20} color={tintColor} />
       ),
@@ -66,7 +67,7 @@ const ProfileStack = createStackNavigator(
   { Profile },
   {
     navigationOptions: {
-      tabBarLabel: 'Meu perfil',
+      tabBarLabel: i18n.t('tab.profile'),
       tabBarIcon: ({ tintColor }) => (
         <MIcon name="person" size={20} color={tintColor} />
       ),

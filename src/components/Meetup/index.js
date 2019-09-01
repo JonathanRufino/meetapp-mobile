@@ -5,6 +5,8 @@ import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { useSelector } from 'react-redux';
 
+import i18n from '~/i18n';
+
 import {
   Container,
   Banner,
@@ -50,12 +52,14 @@ function Meetup({ data, visible, action, onPress }) {
           </Row>
           <Row>
             <Icon name="person" size={14} color="#999" />
-            <Organizer>Organizador: {data.user.name}</Organizer>
+            <Organizer>
+              {i18n.t('label.organizer', { name: data.user.name })}
+            </Organizer>
           </Row>
         </Info>
 
         <ActionButton onPress={onPress}>
-          {loading ? 'Processando...' : action}
+          {loading ? i18n.t('state.processing') : action}
         </ActionButton>
       </Content>
     </Container>

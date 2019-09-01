@@ -3552,6 +3552,11 @@ husky@^3.0.4:
     run-node "^1.0.0"
     slash "^3.0.0"
 
+i18n-js@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/i18n-js/-/i18n-js-3.3.0.tgz#05512f7184b5117c087ab597be649720a834c068"
+  integrity sha512-+m8jh84IIWlFwEJgwrWCkeIwIES9ilJKBOj5qx8ZTLLmlPz7bjKnCdxf254wRf6M4pkQHtgXGT9r9lGk0e9aug==
+
 iconv-lite@0.4.24, iconv-lite@^0.4.17, iconv-lite@^0.4.24, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
@@ -6071,6 +6076,11 @@ react-native-linear-gradient@^2.5.6:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
   integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
+
+react-native-localize@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-localize/-/react-native-localize-1.1.4.tgz#d48aa4f75afd39a42dcd0bdf40f7f44a8ccd604c"
+  integrity sha512-NHsA812yvoH9ktPl1IqIxwDDwykipyH7K4zeW/nnipZuQb2g73SQEB3ryqKHmRASWD0DZl0hIxHr9IszzG5W5w==
 
 react-native-safe-area-view@^0.14.1:
   version "0.14.6"

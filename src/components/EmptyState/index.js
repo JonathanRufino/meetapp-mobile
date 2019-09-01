@@ -3,6 +3,8 @@ import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Entypo';
 
+import i18n from '~/i18n';
+
 import { Container, Title, Message } from './styles';
 
 function EmptyState({ image, title, message }) {
@@ -32,9 +34,8 @@ EmptyState.propTypes = {
 
 EmptyState.defaultProps = {
   image: <Icon name="block" size={100} color="#999" />,
-  title: 'Vazio por aqui não é mesmo?',
-  message:
-    'Não encontramos o que você estava procurando. Mas fique à vontade de continue olhando por aí. :)',
+  title: i18n.t('empty.default.title'),
+  message: i18n.t('empty.default.description'),
 };
 
 export default EmptyState;

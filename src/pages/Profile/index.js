@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Background } from '~/components';
 import { updateProfileRequest } from '~/store/modules/user/actions';
 import { signOut } from '~/store/modules/auth/actions';
+import i18n from '~/i18n';
 
 import {
   Container,
@@ -61,7 +62,7 @@ function Profile() {
       <Container>
         <Form>
           <FormInput
-            placeholder="Nome completo"
+            placeholder={i18n.t('placeholder.name')}
             autoCapitalize="words"
             returnKeyType="next"
             textContentType="name"
@@ -72,7 +73,7 @@ function Profile() {
           />
 
           <FormInput
-            placeholder="Digite seu e-mail"
+            placeholder={i18n.t('placeholder.email')}
             keyboardType="email-address"
             autoCapitalize="none"
             returnKeyType="next"
@@ -88,7 +89,7 @@ function Profile() {
           <Separator />
 
           <FormInput
-            placeholder="Senha atual"
+            placeholder={i18n.t('placeholder.currentPassword')}
             secureTextEntry
             returnKeyType="next"
             textContentType="password"
@@ -100,7 +101,7 @@ function Profile() {
           />
 
           <FormInput
-            placeholder="Nova senha"
+            placeholder={i18n.t('placeholder.newPassword')}
             secureTextEntry
             returnKeyType="next"
             textContentType="password"
@@ -112,7 +113,7 @@ function Profile() {
           />
 
           <FormInput
-            placeholder="Confirmação de senha"
+            placeholder={i18n.t('placeholder.confirmPassword')}
             secureTextEntry
             returnKeyType="go"
             textContentType="password"
@@ -124,10 +125,12 @@ function Profile() {
           />
 
           <SubmitButton loading={loading} onPress={handleSubmit}>
-            Salvar perfil
+            {i18n.t('button.saveProfile')}
           </SubmitButton>
 
-          <LogoutButton onPress={handleSignOut}>Sair do Meetapp</LogoutButton>
+          <LogoutButton onPress={handleSignOut}>
+            {i18n.t('button.signOut')}
+          </LogoutButton>
         </Form>
       </Container>
     </Background>
