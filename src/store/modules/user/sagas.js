@@ -2,10 +2,9 @@ import { Alert } from 'react-native';
 import { all, put, call, takeLatest } from 'redux-saga/effects';
 
 import api from '~/services/api';
-import {
-  updateProfileSuccess,
-  updateProfileFailure,
-} from '~/store/modules/user/actions';
+
+import { updateProfileSuccess, updateProfileFailure } from './actions';
+import UserTypes from './types';
 
 export function* updateProfile({ payload }) {
   try {
@@ -31,4 +30,6 @@ export function* updateProfile({ payload }) {
   }
 }
 
-export default all([takeLatest('@user/UPDATE_PROFILE_REQUEST', updateProfile)]);
+export default all([
+  takeLatest(UserTypes.UPDATE_PROFILE_REQUEST, updateProfile),
+]);

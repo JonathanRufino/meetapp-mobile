@@ -1,5 +1,9 @@
 import produce from 'immer';
 
+import AuthTypes from '~/store/modules/auth/types';
+
+import UserTypes from './types';
+
 const INITIAL_STATE = {
   profile: null,
   loading: false,
@@ -8,24 +12,24 @@ const INITIAL_STATE = {
 function user(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case '@auth/SIGN_IN_SUCCESS': {
+      case AuthTypes.SIGN_IN_SUCCES: {
         draft.profile = action.payload.user;
         break;
       }
-      case '@user/UPDATE_PROFILE_REQUEST': {
+      case UserTypes.UPDATE_PROFILE_REQUEST: {
         draft.loading = true;
         break;
       }
-      case '@user/UPDATE_PROFILE_SUCCESS': {
+      case UserTypes.UPDATE_PROFILE_SUCCESS: {
         draft.profile = action.payload.profile;
         draft.loading = false;
         break;
       }
-      case '@user/UPDATE_PROFILE_FAILURE': {
+      case UserTypes.UPDATE_PROFILE_FAILURE: {
         draft.loading = false;
         break;
       }
-      case '@auth/SIGN_OUT': {
+      case AuthTypes.SIGN_OU: {
         draft.profile = null;
         break;
       }

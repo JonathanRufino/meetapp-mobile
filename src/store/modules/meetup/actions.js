@@ -1,39 +1,39 @@
-import types from './types';
+import MeetupTypes from './types';
 
 export function subscribeRequest(id) {
   return {
-    type: types.SUBSCRIBE_REQUEST,
+    type: MeetupTypes.SUBSCRIBE_REQUEST,
     payload: { id },
   };
 }
 
 export function subscribeSuccess() {
   return {
-    type: types.SUBSCRIBE_SUCCESS,
+    type: MeetupTypes.SUBSCRIBE_SUCCESS,
   };
 }
 
 export function subscribeFailure() {
   return {
-    type: types.SUBSCRIBE_FAILURE,
+    type: MeetupTypes.SUBSCRIBE_FAILURE,
   };
 }
 
 export function cancelSubscriptionRequest(id) {
   return {
-    type: types.CANCEL_SUBSCRIPTION_REQUEST,
+    type: MeetupTypes.CANCEL_SUBSCRIPTION_REQUEST,
     payload: { id },
   };
 }
 
 export function cancelSubscriptionSuccess() {
   return {
-    type: types.CANCEL_SUBSCRIPTION_SUCCESS,
+    type: MeetupTypes.CANCEL_SUBSCRIPTION_SUCCESS,
   };
 }
 
 export function cancelSubscriptionFailure() {
   return {
-    type: types.CANCEL_SUBSCRIPTION_FAILURE,
+    type: MeetupTypes.CANCEL_SUBSCRIPTION_FAILURE,
   };
 }

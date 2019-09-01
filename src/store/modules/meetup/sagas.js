@@ -9,7 +9,7 @@ import {
   cancelSubscriptionSuccess,
   cancelSubscriptionFailure,
 } from './actions';
-import types from './types';
+import MeetupTypes from './types';
 
 export function* subscribe({ payload }) {
   try {
@@ -42,6 +42,6 @@ export function* cancelSubscription({ payload }) {
 }
 
 export default all([
-  takeLatest(types.SUBSCRIBE_REQUEST, subscribe),
-  takeLatest(types.CANCEL_SUBSCRIPTION_REQUEST, cancelSubscription),
+  takeLatest(MeetupTypes.SUBSCRIBE_REQUEST, subscribe),
+  takeLatest(MeetupTypes.CANCEL_SUBSCRIPTION_REQUEST, cancelSubscription),
 ]);
