@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 function user(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case AuthTypes.SIGN_IN_SUCCES: {
+      case AuthTypes.SIGN_IN_SUCCESS: {
         draft.profile = action.payload.user;
         break;
       }
@@ -29,7 +29,7 @@ function user(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
-      case AuthTypes.SIGN_OU: {
+      case AuthTypes.SIGN_OUT: {
         draft.profile = null;
         break;
       }
