@@ -1,12 +1,9 @@
-# Welcome to Meetapp 👋
-![Version](https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000)
-[![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](https://www.jonathanrufino.com/meetup/swagger)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Twitter: JonathanRufinos](https://img.shields.io/twitter/follow/JonathanRufinos.svg?style=social)](https://twitter.com/JonathanRufinos)
+<h1 align="center">Welcome to Meetapp Mobile 👋</h1>
+<p>
+  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+</p>
 
-> Application to manage meetups
-
-### 🏠 [Homepage](https://www.jonathanrufino.com/meetup)
+> Mobile module for the Rocketseat&#39;s Bootcamp challenge
 
 ## Install
 
@@ -17,38 +14,24 @@ yarn
 ## Usage
 
 ```sh
-react-native start
+react-native run-android
 ```
 
 ## Run tests
 
 ```sh
-yarn test
+npm run test
 ```
 
 ## Author
 
-👤 **Jonathan Rufino**
+👤 **Jonathan Rufino &lt;jonathanrufinopaiva@gmail.com&gt;**
 
-* Twitter: [@JonathanRufinos](https://twitter.com/JonathanRufinos)
 * Github: [@JonathanRufino](https://github.com/JonathanRufino)
-
-## 🤝 Contributing
-
-Contributions, issues and feature requests are welcome!
-
-Feel free to check [issues page](https://github.com/JonathanRufino/bootcamp-rocketseat-desafio-10/issues).
 
 ## Show your support
 
-Give a ⭐️ if this project helped you!
-
-
-## 📝 License
-
-Copyright © 2019 [Jonathan Rufino](https://github.com/JonathanRufino).
-
-This project is [MIT](https://opensource.org/licenses/MIT) licensed.
+Give a ⭐️ if this project helped you !
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
