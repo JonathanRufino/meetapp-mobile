@@ -1,7 +1,10 @@
 {
-  "name": "desafio10",
-  "version": "0.0.1",
-  "private": true,
+  "name": "jonathanrufino-meetapp-mobile",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Mobile module for the Rocketseat's Bootcamp challenge",
+  "author": "Jonathan Rufino <jonathanrufinopaiva@gmail.com>",
+  "license": "MIT",
   "scripts": {
     "start": "react-native start",
     "test": "jest",
