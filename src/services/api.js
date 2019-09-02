@@ -9,7 +9,6 @@ const api = axios.create({
 api.interceptors.request.use(
   config => {
     config.headers['Accept-Language'] = i18n.locale;
-    console.tron.log('config', config);
 
     return config;
   },

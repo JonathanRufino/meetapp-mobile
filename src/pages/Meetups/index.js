@@ -61,15 +61,8 @@ function Meetups() {
   }
 
   useEffect(() => {
-    loadPage();
-  }, []); // eslint-disable-line
-
-  useEffect(() => {
-    setPage(1);
-    setTotal(0);
     setMeetups([]);
-
-    loadPage();
+    loadPage(1, true);
   }, [date]); // eslint-disable-line
 
   function decrementDate() {
